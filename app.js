@@ -1,7 +1,11 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
+const path = require('path');
 
 const app = express();
+
+// serve static files
+app.use('/static', express.static(path.join(__dirname, 'public')));
 
 // Handlebars middleware
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
