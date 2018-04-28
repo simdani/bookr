@@ -1,1 +1,42 @@
-Only visible for users who logged in.
+{{#if user}}
+
+  <div>
+    <form class="form-inline mb-3">
+      <a href="/books/add" class="btn btn-primary mr-auto">Add book</a>
+
+      <span class="float-right">
+        <input class="form-control" type="search" placeholder="enter book title..." aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </span>
+    </form>
+  </div>
+
+  <div class="row">
+  {{#each books}}
+    <div class="col-sm-4 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            {{title}}
+          </h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{author}}</h6>
+          <p><strong>{{date}}</strong></p>
+          <p>{{details}}</p>
+          <p>Status: {{status}} <strong>(0/100)</strong></p>
+          <p class="text-right">
+            <a class="btn btn-primary" href="/books/show/{{id}}">Show</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  {{else}}
+    <p>Currently there are no books, add new book.</p>
+  {{/each}}
+  </div>
+
+{{else}}
+  <h1>Example App: Home</h1>
+  <a href="/users/register" class="btn btn-light">Register</a>
+
+  <a href="/users/login" class="btn btn-light">Login</a>
+{{/if}}
