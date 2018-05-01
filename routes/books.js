@@ -13,23 +13,26 @@ router.get('/add', ensureAuthenticated, (req, res) => {
 });
 
 // todo: complete pagination
-router.get('/:page?', ensureAuthenticated, (req, res) => {
+router.get('/:page?', ensureAuthenticated, (req, res, next) => {
   let perPage = 3;
-  let page = req.params.page || 1;
+  let page = (parseInt(req.params.page)) || 1;
 
   Book.find({user: req.user.id})
     .skip((perPage * page) - perPage)
     .limit(perPage)
     .sort({date: 'desc'})
     .then(books => {
-      res.render('books/index', {
-        books: books,
-        pagination: {
-          page: page,
-          pageCount: Math.ceil(books.count / perPage)
-        }
-      });
-    });
+      Book.count()
+        .then(count => {
+          res.render('books/index', {
+            books: books,
+            current: page,
+            pages: Math.ceil(count / perPage)
+          });
+        })
+        .catch(err => { throw err; });
+    })
+    .catch(err => { throw err; });
 });
 
 // add new book
