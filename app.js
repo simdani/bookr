@@ -76,7 +76,8 @@ app.get('/', (req, res) => {
 app.use('/books', books);
 app.use('/users', users);
 
-const port = 5000;
+const port = process.env.PORT || 5000;
+
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
