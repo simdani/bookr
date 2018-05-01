@@ -1,5 +1,4 @@
 const express = require('express');
-const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const path = require('path');
 const methodOverride = require('method-override');
@@ -20,9 +19,8 @@ require('./config/passport')(passport);
 // Db config
 const db = require('./config/database');
 
-// Handlebars middleware
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
+// set the view enine to ejs
+app.set('view engine', 'ejs');
 
 // Map global promise - get rid of warning
 mongoose.Promise = global.Promise;
@@ -67,7 +65,11 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-  res.render('books/index');
+  if (req.isAuthenticated()) {
+    res.redirect('/books');
+  } else {
+    res.render('home');
+  }
 });
 
 // Routes

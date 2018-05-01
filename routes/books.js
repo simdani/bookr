@@ -8,17 +8,28 @@ const { ensureAuthenticated } = require('../helpers/auth');
 require('../models/Book');
 const Book = mongoose.model('books');
 
-router.get('/', ensureAuthenticated, (req, res) => {
-  Book.find({user: req.user.id}).sort({date: 'desc'})
-    .then(books => {
-      res.render('books/index', {
-        books: books
-      });
-    });
-});
-
 router.get('/add', ensureAuthenticated, (req, res) => {
   res.render('books/add');
+});
+
+// todo: complete pagination
+router.get('/:page?', ensureAuthenticated, (req, res) => {
+  let perPage = 3;
+  let page = req.params.page || 1;
+
+  Book.find({user: req.user.id})
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .sort({date: 'desc'})
+    .then(books => {
+      res.render('books/index', {
+        books: books,
+        pagination: {
+          page: page,
+          pageCount: Math.ceil(books.count / perPage)
+        }
+      });
+    });
 });
 
 // add new book
