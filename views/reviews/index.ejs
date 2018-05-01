@@ -1,0 +1,26 @@
+<% include ../partials/head %>
+
+<h1>Book reviews</h1>
+
+<% if (user) { %>
+<a href="/reviews/add" class="btn btn-primary">add review</a>
+<% } %>
+
+
+  <% if (reviews.length > 0) { %>
+    <% reviews.forEach(function (review) { %>
+
+      <div class="blog-post">
+          <h2 class="blog-post-title"><a href="/reviews/show/<%= review.id %>"><%= review.title %></a></h2>
+          <p class="blog-post-meta"><%= review.date %> by <a href="#"><%= review.user.name %></a></p>
+      
+          <p><%= review.body %></p>
+          <hr>
+      </div><!-- /.blog-post -->
+
+    <% }) %>
+  <% } else { %>
+    There is no reviews yet.
+  <% } %>
+
+<% include ../partials/footer %>

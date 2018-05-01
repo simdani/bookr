@@ -1,0 +1,34 @@
+<% include ../partials/head %>
+
+<div class="card card-body">
+    <h3>Add review</h3>
+    <form action="/reviews" method="POST">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" name="title" required>
+      </div>
+
+      <div class="form-group">
+        <select class="form-control col-md-4" name="status">
+          <option value="public" selected>Public</option>
+          <option value="private">Private</option>
+          <option value="unpublished">Unpublished</option>
+        </select>
+      </div>
+
+      <div class="form-check">
+        <p>
+          <input type="checkbox" name="allowComments" class="form-check-input" id="filled-in-box" checked="checked">
+          <label class="form-check-label" for="filled-in-box">Allow Comments</label>
+        </p>
+      </div> 
+
+      <div class="form-group">
+          <h5>Enter your review: </h5>
+          <textarea name="body"></textarea>   
+      </div>
+      <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+  </div>
+
+<% include ../partials/footer %>

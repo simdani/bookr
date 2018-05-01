@@ -12,6 +12,7 @@ const app = express();
 // Load routes
 const books = require('./routes/books');
 const users = require('./routes/users');
+const reviews = require('./routes/reviews');
 
 // passport config
 require('./config/passport')(passport);
@@ -75,6 +76,7 @@ app.get('/', (req, res) => {
 // Routes
 app.use('/books', books);
 app.use('/users', users);
+app.use('/reviews', reviews);
 
 const port = process.env.PORT || 5000;
 
