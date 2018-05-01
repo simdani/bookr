@@ -2,18 +2,18 @@ const express = require('express');
 const router = express.Router();
 
 // Load controlelrs
-const reviewController = require('../controllers/reviewController');
+const reviewsController = require('../controllers/reviewsController');
 
 // load method for checking if user is logged in
 const { ensureAuthenticated } = require('../helpers/auth');
 
 // /reviews/index main page
-router.get('/', reviewController.index);
+router.get('/', reviewsController.index);
 
 // /reviews/add display add form
-router.get('/add', ensureAuthenticated, reviewController.addReview);
+router.get('/add', ensureAuthenticated, reviewsController.addReview);
 
 // /reviews/ post new review
-router.post('/', ensureAuthenticated, reviewController.postReview);
+router.post('/', ensureAuthenticated, reviewsController.postReview);
 
 module.exports = router;
