@@ -1,5 +1,7 @@
 if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./database_prod');
+  module.exports = {
+    mongoURI: process.env.MONGO_URI
+  };
 } else {
   module.exports = require('./database_dev');
 }
