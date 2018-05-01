@@ -14,7 +14,7 @@ router.get('/add', ensureAuthenticated, (req, res) => {
 
 // todo: complete pagination
 router.get('/:page?', ensureAuthenticated, (req, res, next) => {
-  let perPage = 3;
+  let perPage = 9;
   let page = (parseInt(req.params.page)) || 1;
 
   Book.find({user: req.user.id})
