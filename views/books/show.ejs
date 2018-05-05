@@ -18,7 +18,7 @@
 
   <p><%= book.details %></p>
   <p>Status: <strong><%= book.status %></strong></p>
-  <p>Pages: <strong><%= book.length %></strong></p>
+  <p>Pages: <strong><%= book.currentPage %>/<%= book.pages %> (<%= Math.round((book.currentPage / book.pages) * 100.0) %> %)</strong></p>
   <hr>
 
   <h3>Add note</h3>

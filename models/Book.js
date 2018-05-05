@@ -11,6 +11,11 @@ const BookSchema = new Schema({
     type: String,
     required: true
   },
+  currentPage: {
+    type: Number,
+    required: true,
+    default: 0
+  },
   pages: {
     type: Number,
     required: true

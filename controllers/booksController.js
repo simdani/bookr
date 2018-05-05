@@ -79,8 +79,10 @@ exports.postBook = (req, res) => {
     const newBook = {
       title: req.body.title,
       author: req.body.author,
+      currentPage: req.body.currentPage,
       pages: req.body.pages,
       details: req.body.details,
+      status: req.body.status,
       user: req.user.id
     };
     new Book(newBook)
@@ -170,6 +172,7 @@ exports.putEditBook = (req, res) => {
           book.title = req.body.title;
           book.details = req.body.details;
           book.author = req.body.author;
+          book.currentPage = req.body.currentPage;
           book.pages = req.body.pages;
 
           book.save()
@@ -190,18 +193,28 @@ exports.addNote = (req, res) => {
     _id: req.params.id
   })
     .then(book => {
-      const note = {
-        note: req.body.note,
-        user: req.user.id
-      };
+      if (parseInt(book.user) !== parseInt(req.user.id)) {
+        res.flash('error_msg', 'Not authorized to add note.');
+        res.redirect('/books');
+      } else {
+        if (!req.body.note) {
+          res.render(`/books/show/${book.id}`);
+        } else {
+          // create new note
+          const note = {
+            note: req.body.note,
+            user: req.user.id
+          };
 
-      book.notes.push(note);
-      book.save()
-        .then(book => {
-          req.flash('success_msg', 'Note created successfully.');
-          res.redirect(`/books/show/${book.id}`);
-        })
-        .catch(err => { throw err; });
+          book.notes.push(note);
+          book.save()
+            .then(book => {
+              req.flash('success_msg', 'Note created successfully.');
+              res.redirect(`/books/show/${book.id}`);
+            })
+            .catch(err => { throw err; });
+        }
+      }
     })
     .catch(err => { throw err; });
 };
