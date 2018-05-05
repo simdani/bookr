@@ -183,3 +183,25 @@ exports.putEditBook = (req, res) => {
     })
     .catch(err => { throw err; });
 };
+
+// add note to book
+exports.addNote = (req, res) => {
+  Book.findOne({
+    _id: req.params.id
+  })
+    .then(book => {
+      const note = {
+        note: req.body.note,
+        user: req.user.id
+      };
+
+      book.notes.push(note);
+      book.save()
+        .then(book => {
+          req.flash('success_msg', 'Note created successfully.');
+          res.redirect(`/books/show/${book.id}`);
+        })
+        .catch(err => { throw err; });
+    })
+    .catch(err => { throw err; });
+};

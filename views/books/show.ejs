@@ -20,6 +20,25 @@
   <p>Status: <strong><%= book.status %></strong></p>
   <p>Pages: <strong><%= book.length %></strong></p>
   <hr>
+
+  <h3>Add note</h3>
+  <form action="/books/<%= book.id %>/note" method="POST" class="mb-3">
+    <div class="form-group">
+      <label for="note">Note: </label>
+      <textarea class="form-control" name="note" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+
+  <% if (book.notes.length > 0) { %>
+    <% book.notes.forEach(function (note) { %>
+      <div class="card">
+        <div class="card-body">
+          <%= note.note %>
+        </div>
+      </div>
+    <% })} %>
+    <br>
 </div><!-- /.blog-post -->
 
 

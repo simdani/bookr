@@ -27,4 +27,7 @@ router.get('/edit/:id', ensureAuthenticated, booksController.editBook);
 // update book
 router.put('/:id', ensureAuthenticated, booksController.putEditBook);
 
+// add note to book
+router.post('/:id/note', ensureAuthenticated, booksController.addNote);
+
 module.exports = router;
