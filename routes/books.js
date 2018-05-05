@@ -21,4 +21,10 @@ router.get('/show/:id', ensureAuthenticated, booksController.showBook);
 // delete book
 router.delete('/:id', ensureAuthenticated, booksController.deleteBook);
 
+// book edit form
+router.get('/edit/:id', ensureAuthenticated, booksController.editBook);
+
+// update book
+router.put('/:id', ensureAuthenticated, booksController.putEditBook);
+
 module.exports = router;

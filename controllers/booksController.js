@@ -52,7 +52,6 @@ exports.index = (req, res, next) => {
 
 // create new book post
 exports.postBook = (req, res) => {
-  console.log(req.body);
   let errors = [];
 
   if (!req.body.title) {
@@ -62,7 +61,7 @@ exports.postBook = (req, res) => {
     errors.push({text: 'Please add an author'});
   }
   if (!req.body.details) {
-    errors.push({text: 'Please add book description'});
+    errors.push({text: 'Please add book details'});
   }
   if (!req.body.pages) {
     errors.push({text: 'Please add book pages'});
@@ -113,6 +112,73 @@ exports.deleteBook = (req, res) => {
             res.redirect('/books');
           })
           .catch(err => { throw err; });
+      }
+    })
+    .catch(err => { throw err; });
+};
+
+exports.editBook = (req, res) => {
+  Book.findOne({
+    _id: req.params.id
+  })
+    .then(book => {
+      if (parseInt(book.user) !== parseInt(req.user.id)) {
+        res.flash('error_msg', 'Not authorized to edit this book.');
+        res.redirect('/books');
+      } else {
+        res.render('books/edit', {
+          book: book
+        });
+      }
+    })
+    .catch(err => { throw err; });
+};
+
+exports.putEditBook = (req, res) => {
+  Book.findOne({
+    _id: req.params.id
+  })
+    .then(book => {
+      if (parseInt(book.user) !== parseInt(req.user.id)) {
+        res.flash('error_msg', 'Not authorized to edit this bok.');
+        res.redirect('/books');
+      } else {
+        let errors = [];
+
+        if (!req.body.title) {
+          errors.push({text: 'Please add a title'});
+        }
+        if (!req.body.author) {
+          errors.push({text: 'Please add an author'});
+        }
+        if (!req.body.details) {
+          errors.push({text: 'Please add book details'});
+        }
+        if (!req.body.pages) {
+          errors.push({text: 'Please add book pages'});
+        }
+
+        if (errors.length > 0) {
+          res.render('/edit', {
+            errors: errors,
+            title: req.body.title,
+            author: req.body.author,
+            details: req.body.details,
+            pages: req.body.pages
+          });
+        } else {
+          book.title = req.body.title;
+          book.details = req.body.details;
+          book.author = req.body.author;
+          book.pages = req.body.pages;
+
+          book.save()
+            .then(book => {
+              req.flash('success_msg', 'Book updated successfully.');
+              res.redirect('/books');
+            })
+            .catch(err => { throw err; });
+        }
       }
     })
     .catch(err => { throw err; });
