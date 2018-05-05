@@ -1,0 +1,27 @@
+<% include ../partials/head %>
+
+  <a href="/books" class="btn btn-primary mb-3">Back</a>
+
+  <form class="form-inline mb-3" action="/books/<%= book.id %>?_method=delete" method="post">
+    <a class="btn btn-primary mr-3" href="/books/edit/<%= book.id %>">Edit</a>
+
+    <span class="float-right">
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" class="btn btn-danger btn-block" value="Remove">
+    </span>
+  </form>
+
+<div class="blog-post">
+  <h2 class="blog-post-title"><%= book.title %></h2>
+  <p class="blog-post-meta"><%= book.author %></p>
+  <p class="blog-post-meta"><%= book.date %></p>
+
+  <p><%= book.details %></p>
+  <p>Status: <strong><%= book.status %></strong></p>
+  <p>Pages: <strong><%= book.length %></strong></p>
+  <hr>
+</div><!-- /.blog-post -->
+
+
+
+<% include ../partials/footer %>

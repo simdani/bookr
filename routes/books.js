@@ -15,4 +15,10 @@ router.get('/:page?', ensureAuthenticated, booksController.index);
 // add new book
 router.post('/', ensureAuthenticated, booksController.postBook);
 
+// get individual book
+router.get('/show/:id', ensureAuthenticated, booksController.showBook);
+
+// delete book
+router.delete('/:id', ensureAuthenticated, booksController.deleteBook);
+
 module.exports = router;
