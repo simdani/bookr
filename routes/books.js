@@ -30,4 +30,7 @@ router.put('/:id', ensureAuthenticated, booksController.putEditBook);
 // add note to book
 router.post('/:id/note', ensureAuthenticated, booksController.addNote);
 
+// remove note from book
+router.delete('/:id/notes/:note', ensureAuthenticated, booksController.removeNote);
+
 module.exports = router;

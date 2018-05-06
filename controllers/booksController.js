@@ -10,7 +10,7 @@ exports.showBook = (req, res) => {
     _id: req.params.id
   })
     .then(book => {
-      if (parseInt(book.user) !== parseInt(req.user.id)) {
+      if (book.user.toString() !== req.user.id.toString()) {
         req.flash('error_msg', 'Not authorized to view this.');
         res.redirect('/books');
       } else {
@@ -102,7 +102,7 @@ exports.deleteBook = (req, res) => {
     _id: req.params.id
   })
     .then((book) => {
-      if (parseInt(book.user) !== parseInt(req.user.id)) {
+      if (book.user.toString() !== req.user.id.toString()) {
         req.flash('error_msg', 'Not authorized to delete this.');
         res.redirect('/books');
       } else {
@@ -124,7 +124,7 @@ exports.editBook = (req, res) => {
     _id: req.params.id
   })
     .then(book => {
-      if (parseInt(book.user) !== parseInt(req.user.id)) {
+      if (book.user.toString() !== req.user.id.toString()) {
         res.flash('error_msg', 'Not authorized to edit this book.');
         res.redirect('/books');
       } else {
@@ -141,7 +141,7 @@ exports.putEditBook = (req, res) => {
     _id: req.params.id
   })
     .then(book => {
-      if (parseInt(book.user) !== parseInt(req.user.id)) {
+      if (book.user.toString() !== req.user.id.toString()) {
         res.flash('error_msg', 'Not authorized to edit this bok.');
         res.redirect('/books');
       } else {
@@ -193,7 +193,7 @@ exports.addNote = (req, res) => {
     _id: req.params.id
   })
     .then(book => {
-      if (parseInt(book.user) !== parseInt(req.user.id)) {
+      if (book.user.toString() !== req.user.id.toString()) {
         res.flash('error_msg', 'Not authorized to add note.');
         res.redirect('/books');
       } else {
@@ -214,6 +214,35 @@ exports.addNote = (req, res) => {
             })
             .catch(err => { throw err; });
         }
+      }
+    })
+    .catch(err => { throw err; });
+};
+
+// remove note from book crazy hack to remove note.
+exports.removeNote = (req, res) => {
+  Book.findOne({
+    _id: req.params.id
+  })
+    .then(book => {
+      let index = -1;
+      // check for specific note in array
+      for (let i = 0; i < book.notes.length; i++) {
+        if (book.notes[i]._id.toString() === req.params.note.toString()) {
+          index = i;
+        }
+      }
+      // if we found the note, then we need to remove it.
+      if (index !== -1) {
+        book.notes.splice(index, 1);
+        book.save()
+          .then(book => {
+            req.flash('success_msg', 'Note deleted successfully.');
+            res.redirect(`/books/show/${book.id}`);
+          })
+          .catch(err => { throw err; });
+      } else {
+        res.redirect(`/books/show/${book.id}`);
       }
     })
     .catch(err => { throw err; });
