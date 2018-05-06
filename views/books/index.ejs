@@ -3,11 +3,11 @@
 <% if (user) { %>
 
   <div>
-    <form class="form-inline mb-3">
+    <form action="/books/search" method="GET" class="form-inline mb-3">
       <a href="/books/add" class="btn btn-primary mr-auto">Add book</a>
 
       <span class="float-right">
-        <input class="form-control" type="search" placeholder="enter book title..." aria-label="Search">
+        <input class="form-control" name="search" type="text" placeholder="enter book title..." aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </span>
     </form>

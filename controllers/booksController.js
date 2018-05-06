@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+// Load regex helper
+const regexHelper = require('../helpers/regex');
+
 // Load book model
 require('../models/Book');
 const Book = mongoose.model('books');
@@ -29,25 +32,45 @@ exports.addBook = (req, res) => {
 
 // get index books
 exports.index = (req, res, next) => {
-  let perPage = 9;
-  let page = (parseInt(req.params.page)) || 1;
+  let perPage = 9; // books per page
+  let page = (parseInt(req.params.page)) || 1; // current page
 
-  Book.find({user: req.user.id})
-    .skip((perPage * page) - perPage)
-    .limit(perPage)
-    .sort({date: 'desc'})
-    .then(books => {
-      Book.count()
-        .then(count => {
-          res.render('books/index', {
-            books: books,
-            current: page,
-            pages: Math.ceil(count / perPage)
-          });
-        })
-        .catch(err => { throw err; });
-    })
-    .catch(err => { throw err; });
+  if (req.query.search) {
+    const regex = new RegExp(regexHelper.escapeRegex(req.query.search), 'gi');
+    Book.find({title: regex})
+      .skip((perPage * page) - perPage)
+      .limit(perPage)
+      .sort({date: 'desc'})
+      .then(books => {
+        Book.count()
+          .then(count => {
+            res.render('books/index', {
+              books: books,
+              current: page,
+              pages: Math.ceil(count / perPage)
+            });
+          })
+          .catch(err => { throw err; });
+      })
+      .catch(err => { throw err; });
+  } else {
+    Book.find({user: req.user.id})
+      .skip((perPage * page) - perPage)
+      .limit(perPage)
+      .sort({date: 'desc'})
+      .then(books => {
+        Book.count()
+          .then(count => {
+            res.render('books/index', {
+              books: books,
+              current: page,
+              pages: Math.ceil(count / perPage)
+            });
+          })
+          .catch(err => { throw err; });
+      })
+      .catch(err => { throw err; });
+  }
 };
 
 // create new book post
