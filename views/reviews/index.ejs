@@ -1,9 +1,10 @@
 <% include ../partials/head %>
 
+<div class="card card-body home-color">
 <h1>Book reviews</h1>
 
 <% if (user) { %>
-<a href="/reviews/add" class="btn btn-primary">add review</a>
+<a href="/reviews/add" class="btn btn-secondary">add review</a>
 <% } %>
 
 
@@ -22,5 +23,6 @@
   <% } else { %>
     There is no reviews yet.
   <% } %>
+</div>
 
 <% include ../partials/footer %>

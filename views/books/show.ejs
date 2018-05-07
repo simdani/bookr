@@ -1,9 +1,9 @@
 <% include ../partials/head %>
 
-  <a href="/books" class="btn btn-primary mb-3">Back</a>
+  <a href="/books" class="btn btn-secondary mb-3">Back</a>
 
   <form class="form-inline mb-3" action="/books/<%= book.id %>?_method=delete" method="post">
-    <a class="btn btn-primary mr-3" href="/books/edit/<%= book.id %>">Edit</a>
+    <a class="btn btn-secondary mr-3" href="/books/edit/<%= book.id %>">Edit</a>
 
     <span class="float-right">
     <input type="hidden" name="_method" value="delete">
@@ -11,43 +11,45 @@
     </span>
   </form>
 
-<div class="blog-post">
-  <h2 class="blog-post-title"><%= book.title %></h2>
-  <p class="blog-post-meta"><%= book.author %></p>
-  <p class="blog-post-meta"><%= book.date %></p>
+<div class="card card-body home-color">
+  <div class="blog-post">
+    <h2 class="blog-post-title"><%= book.title %></h2>
+    <p class="blog-post-meta"><%= book.author %></p>
+    <p class="blog-post-meta"><%= book.date %></p>
 
-  <p><%= book.details %></p>
-  <p>Status: <strong><%= book.status %></strong></p>
-  <p>Pages: <strong><%= book.currentPage %>/<%= book.pages %> (<%= Math.round((book.currentPage / book.pages) * 100.0) %> %)</strong></p>
-  <hr>
+    <p><%= book.details %></p>
+    <p>Status: <strong><%= book.status %></strong></p>
+    <p>Pages: <strong><%= book.currentPage %>/<%= book.pages %> (<%= Math.round((book.currentPage / book.pages) * 100.0) %> %)</strong></p>
+    <hr>
 
-  <h3>Add note</h3>
-  <form action="/books/<%= book.id %>/note" method="POST" class="mb-3">
-    <div class="form-group">
-      <label for="note">Note: </label>
-      <textarea class="form-control" name="note" required></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Add</button>
-  </form>
-
-  <% if (book.notes.length > 0) { %>
-    <% book.notes.forEach(function (note) { %>
-      <div class="card">
-        <div class="card-body">
-          <%= note.note %>
-
-          <form action="/books/<%= book.id %>/notes/<%= note.id %>?_method=delete" method="post">
-            <span class="float-right">
-            <input type="hidden" name="_method" value="delete">
-            <input type="submit" class="btn btn-danger btn-block" value="Remove">
-            </span>
-          </form>
-
-        </div>
+    <h3>Add note</h3>
+    <form action="/books/<%= book.id %>/note" method="POST" class="mb-3">
+      <div class="form-group">
+        <label for="note">Note: </label>
+        <textarea class="form-control" name="note" required></textarea>
       </div>
-    <% })} %>
-    <br>
-</div><!-- /.blog-post -->
+      <button type="submit" class="btn btn-secondary">Add</button>
+    </form>
+
+    <% if (book.notes.length > 0) { %>
+      <% book.notes.forEach(function (note) { %>
+        <div class="card">
+          <div class="card-body">
+            <%= note.note %>
+
+            <form action="/books/<%= book.id %>/notes/<%= note.id %>?_method=delete" method="post">
+              <span class="float-right">
+              <input type="hidden" name="_method" value="delete">
+              <input type="submit" class="btn btn-danger btn-block" value="Remove">
+              </span>
+            </form>
+
+          </div>
+        </div>
+      <% })} %>
+      <br>
+  </div>
+</div>
 
 
 

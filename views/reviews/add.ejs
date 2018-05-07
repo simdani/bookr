@@ -1,6 +1,8 @@
 <% include ../partials/head %>
 
-<div class="card card-body">
+<a href="/books" class="btn btn-secondary mb-3">Back</a>
+
+<div class="card card-body home-color">
     <h3>Add review</h3>
     <form action="/reviews" method="POST">
       <div class="form-group">
@@ -27,7 +29,7 @@
           <h5>Enter your review: </h5>
           <textarea name="body"></textarea>   
       </div>
-      <button type="submit" class="btn btn-primary">Add</button>
+      <button type="submit" class="btn btn-secondary">Add</button>
     </form>
   </div>
 

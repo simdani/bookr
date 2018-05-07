@@ -6,11 +6,6 @@ const passport = require('passport');
 require('../models/User');
 const User = mongoose.model('users');
 
-// user registration form
-exports.getRegistration = (req, res) => {
-  res.render('users/register');
-};
-
 // user login form
 exports.getLogin = (req, res) => {
   res.render('users/login');
@@ -35,7 +30,7 @@ exports.postRegister = (req, res) => {
     errors.push({text: 'Password must be at least 4 characters'});
   }
   if (errors.length > 0) {
-    res.render('users/register', {
+    res.render('home', {
       errors: errors,
       name: req.body.name,
       email: req.body.email,
@@ -46,7 +41,7 @@ exports.postRegister = (req, res) => {
     User.findOne({email: req.body.email}).then(user => {
       if (user) {
         req.flash('error_msg', 'User exists with this email already');
-        res.redirect('/users/register');
+        res.redirect('/');
       } else {
         const newUser = new User({
           name: req.body.name,

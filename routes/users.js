@@ -4,9 +4,6 @@ const router = express.Router();
 // load user controller
 const usersController = require('../controllers/usersController');
 
-// User registration roue
-router.get('/register', usersController.getRegistration);
-
 // User login route
 router.get('/login', usersController.getLogin);
 

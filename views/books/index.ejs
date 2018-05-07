@@ -3,12 +3,12 @@
 <% if (user) { %>
 
   <div>
-    <form action="/books/search" method="GET" class="form-inline mb-3">
-      <a href="/books/add" class="btn btn-primary mr-auto">Add book</a>
+    <form action="/books" method="GET" class="form-inline mb-3">
+      <a href="/books/add" class="btn btn-secondary mr-auto">Add book</a>
 
       <span class="float-right">
         <input class="form-control" name="search" type="text" placeholder="enter book title..." aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <button class="btn btn-secondary" type="submit">Search</button>
       </span>
     </form>
   </div>
@@ -17,7 +17,7 @@
   <% if (books.length > 0) { %>
   <% books.forEach(function (book) { %>
     <div class="col-sm-4 mb-3">
-      <div class="card">
+      <div class="card home-color">
         <div class="card-body">
           <h5 class="card-title">
             <%= book.title %>
@@ -28,7 +28,7 @@
           <p>Status: <%= book.status %></p>
           <p>Progress: <strong><%= book.currentPage %>/<%= book.pages %> (<%= Math.round((book.currentPage / book.pages) * 100.0) %> %)</strong></p>
           <p class="text-right">
-            <a class="btn btn-primary" href="/books/show/<%= book.id %>">Show</a>
+            <a class="btn btn-dark dark-brown-color btn-block" href="/books/show/<%= book.id %>">Show</a>
           </p>
         </div>
       </div>
