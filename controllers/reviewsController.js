@@ -18,6 +18,7 @@ exports.addReview = (req, res) => {
   res.render('reviews/add');
 };
 
+// create new review (POST)
 exports.postReview = (req, res) => {
   let allowComments;
 
@@ -42,4 +43,18 @@ exports.postReview = (req, res) => {
     .then(review => {
       res.redirect('reviews');
     });
+};
+
+// show review
+exports.showReview = (req, res) => {
+  Review.findOne({
+    _id: req.params.id
+  })
+    .populate('user')
+    .then(review => {
+      res.render('reviews/show', {
+        review
+      });
+    })
+    .catch(err => { throw err; });
 };

@@ -1,0 +1,16 @@
+<% include ../partials/head %>
+
+<a href="/reviews" class="btn btn-secondary mb-3">Back</a>
+
+<div class="card card-body home-color">
+  <h1><%= review.title %></h1>
+
+  <div class="blog-post">
+    <h5 class="blog-post-title"><%= review.date %> by <a href="/users/show/<%= review.user.id %>"><%= review.user.name %></a></h5>
+      
+    <p><%= review.body %></p>
+    <hr>
+    </div><!-- /.blog-post -->
+</div>
+
+<% include ../partials/footer %>

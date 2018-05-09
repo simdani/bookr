@@ -68,6 +68,18 @@ exports.postRegister = (req, res) => {
   }
 };
 
+// show user profile
+exports.showUserProfile = (req, res) => {
+  User.findOne({
+    _id: req.params.id
+  })
+    .then(user => {
+      res.render('users/show', {
+        user
+      });
+    });
+};
+
 exports.logoutUser = (req, res) => {
   req.logout();
   req.flash('success_msg', 'You are logged out');

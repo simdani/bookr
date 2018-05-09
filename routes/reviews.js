@@ -16,4 +16,7 @@ router.get('/add', ensureAuthenticated, reviewsController.addReview);
 // /reviews/ post new review
 router.post('/', ensureAuthenticated, reviewsController.postReview);
 
+// show review
+router.get('/show/:id', reviewsController.showReview);
+
 module.exports = router;
