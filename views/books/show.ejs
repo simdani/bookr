@@ -1,14 +1,11 @@
 <% include ../partials/head %>
-
-  <a href="/books" class="btn btn-secondary mb-3">Back</a>
-
   <form class="form-inline mb-3" action="/books/<%= book.id %>?_method=delete" method="post">
+    <a href="/books" class="btn btn-secondary mr-3">Back</a>
+
     <a class="btn btn-secondary mr-3" href="/books/edit/<%= book.id %>">Edit</a>
 
-    <span class="float-right">
     <input type="hidden" name="_method" value="delete">
-    <input type="submit" class="btn btn-danger btn-block" value="Remove">
-    </span>
+    <input type="submit" class="btn btn-danger" value="Remove">
   </form>
 
 <div class="card card-body home-color">

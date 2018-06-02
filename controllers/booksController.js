@@ -91,7 +91,7 @@ exports.postBook = (req, res) => {
   }
 
   if (errors.length > 0) {
-    res.render('/add', {
+    res.render('books/add', {
       errors: errors,
       title: req.body.title,
       author: req.body.author,
@@ -182,19 +182,20 @@ exports.putEditBook = (req, res) => {
         if (!req.body.pages) {
           errors.push({text: 'Please add book pages'});
         }
+        if (req.body.currentPage > req.body.pages) {
+          errors.push({text: 'Current page cannot be greater than total pages!'});
+        }
 
         if (errors.length > 0) {
-          res.render('/edit', {
+          res.render('books/edit', {
             errors: errors,
-            title: req.body.title,
-            author: req.body.author,
-            details: req.body.details,
-            pages: req.body.pages
+            book: book
           });
         } else {
           book.title = req.body.title;
           book.details = req.body.details;
           book.author = req.body.author;
+          book.status = req.body.status;
           book.currentPage = req.body.currentPage;
           book.pages = req.body.pages;
 
