@@ -51,10 +51,36 @@ exports.showReview = (req, res) => {
     _id: req.params.id
   })
     .populate('user')
+    .populate('comments.commentUser')
     .then(review => {
       res.render('reviews/show', {
         review
       });
     })
     .catch(err => { throw err; });
+};
+
+// add commment to review
+exports.addCommentToReview = (req, res) => {
+  Review.findOne({
+    _id: req.params.id
+  })
+    .then(review => {
+      if (!req.body.comment) {
+        res.render(`/reviews/show/${review.id}`);
+      } else {
+        // add new comment
+        const comment = {
+          commentBody: req.body.comment,
+          commentUser: req.user.id
+        };
+        review.comments.push(comment);
+        review.save()
+          .then(review => {
+            req.flash('success_msg', 'Comment created successfully.');
+            res.redirect(`/reviews/show/${review.id}`);
+          })
+          .catch(err => { throw err; });
+      }
+    });
 };

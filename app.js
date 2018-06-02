@@ -78,6 +78,8 @@ app.use('/books', books);
 app.use('/users', users);
 app.use('/reviews', reviews);
 
+// add statistics
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {

@@ -10,6 +10,33 @@
       
     <p><%= review.body %></p>
     <hr>
+
+    <h3>Comments</h3>
+
+    <% if (user) { %>
+      <h5>Add comment</h5>
+      <form action="/reviews/<%= review.id %>/comment" method="POST" class="mb-3">
+        <div class="form-group">
+          <label for="comment">Comment: </label>
+          <textarea class="form-control" name="comment" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-secondary">Post</button>
+      </form>
+    <% } %>
+
+    <% if (review.comments.length > 0) { %>
+      <% review.comments.forEach(function (comment) { %>
+        <div class="card">
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted"><strong><a href="/users/show/<%= comment.commentUser.id %>"><%= comment.commentUser.email %></a></strong> at <%= comment.commentDate %></h6>
+            <%= comment.commentBody %>
+          </div>
+        </div>
+      <% })} else { %>
+        <p>Currently there are no comments.</p>
+      <% } %>
+      <br>
+
     </div><!-- /.blog-post -->
 </div>
 

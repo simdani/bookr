@@ -16,6 +16,9 @@ router.get('/add', ensureAuthenticated, reviewsController.addReview);
 // /reviews/ post new review
 router.post('/', ensureAuthenticated, reviewsController.postReview);
 
+// add comment to specific review
+router.post('/:id/comment', ensureAuthenticated, reviewsController.addCommentToReview);
+
 // show review
 router.get('/show/:id', reviewsController.showReview);
 
